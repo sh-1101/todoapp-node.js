@@ -1,4 +1,6 @@
 const tasksDOM = document.querySelector(".tasks");
+const formDOM = document.querySelector(".task-form");
+const taskInputDOM = document.querySelector(".task-input");
 
 // /api/v1/tasksからタスクを読み込む
 const showTasks = async () => {
@@ -33,3 +35,16 @@ const showTasks = async () => {
 };
 
 showTasks();
+
+//タスクを新規作成する
+formDOM.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = taskInputDOM.value;
+  try {
+    await axios.post("/api/v1/tasks", { name: name });
+    showTasks();
+    taskInputDOM.value = "";
+  } catch (err) {
+    console.log(err);
+  }
+});
